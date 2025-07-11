@@ -1,0 +1,58 @@
+version: '3.4'
+
+services:
+  auth-db:
+    image: postgres
+    container_name: auth-db
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: auth_db
+
+  cliente-db:
+    image: postgres
+    container_name: cliente-db
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: cliente_db
+
+  contador-db:
+    image: postgres
+    container_name: contador-db
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: contador_db
+
+  api-gateway:
+    build: ./src/gateway/ApiGateway
+    ports:
+      - "5000:80"
+
+  auth-service:
+    build: ./src/services/AuthService/WebApi
+    ports:
+      - "5001:80"
+    depends_on:
+      - auth-db
+
+  cliente-service:
+    build: ./src/services/ClienteService/WebApi
+    ports:
+      - "5002:80"
+    depends_on:
+      - cliente-db
+
+  contador-service:
+    build: ./src/services/ContadorService/WebApi
+    ports:
+      - "5003:80"
+    depends_on:
+      - contador-db
