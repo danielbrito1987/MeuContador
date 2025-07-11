@@ -11,9 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ClienteService.Application\ClienteService.Application.csproj" />
-    <ProjectReference Include="..\ClienteService.Domain\ClienteService.Domain.csproj" />
-    <ProjectReference Include="..\ClienteService.Infraestructure\ClienteService.Infraestructure.csproj" />
+    <ProjectReference Include="..\ContadorService.Application\ContadorService.Application.csproj" />
+    <ProjectReference Include="..\ContadorService.Domain\ContadorService.Domain.csproj" />
+    <ProjectReference Include="..\ContadorService.Infraestructure\ContadorService.Infraestructure.csproj" />
   </ItemGroup>
 
 </Project>

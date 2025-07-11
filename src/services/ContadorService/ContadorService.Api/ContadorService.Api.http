@@ -1,0 +1,6 @@
+@ContadorService.Api_HostAddress = http://localhost:5158
+
+GET {{ContadorService.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
