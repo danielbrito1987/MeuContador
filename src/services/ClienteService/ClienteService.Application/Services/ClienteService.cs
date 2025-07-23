@@ -22,11 +22,15 @@ namespace ClienteService.Application.Services
             _mapper = mapper;
         }
 
-        public async Task AddClienteAsync(ClienteRequest cliente)
+        public async Task<ClienteDto> AddClienteAsync(ClienteRequest request)
         {
-            var dto = _mapper.Map<Cliente>(cliente);
+            var cliente = _mapper.Map<Cliente>(request);
 
-            await _repository.AddClienteAsync(dto);
+            await _repository.AddClienteAsync(cliente);
+
+            var dto = _mapper.Map<ClienteDto>(cliente);
+
+            return dto;
         }
 
         public async Task<IList<ClienteDto>> GetAllAsync()

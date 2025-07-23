@@ -23,9 +23,9 @@ namespace AuthService.Api.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterRequest request)
+        public async Task<IActionResult> Register([FromBody]RegisterDto request)
         {
-            var token = await _service.RegisterAsync(request.Name, request.Email, request.Password);
+            var token = await _service.RegisterAsync(request);
             return Ok(new { Token = token });
         }
 

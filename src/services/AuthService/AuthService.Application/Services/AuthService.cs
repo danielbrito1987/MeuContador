@@ -1,6 +1,8 @@
-﻿using AuthService.Application.Helper;
+﻿using AuthService.Application.DTO;
+using AuthService.Application.Helper;
 using AuthService.Application.Interfaces.Repositories;
 using AuthService.Application.Interfaces.Services;
+using AuthService.Domain;
 using AuthService.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -21,16 +23,18 @@ namespace AuthService.Application.Services
             _userRepository = userRepository;
         }
 
-        public async Task<string> RegisterAsync(string name, string email, string password)
+        public async Task<string> RegisterAsync(RegisterDto dto)
         {
-            if (await _userRepository.ExistsByEmailAsync(email))
+            if (await _userRepository.ExistsByEmailAsync(dto.Email))
                 throw new Exception("E-mail já cadastrado.");
 
             var user = new User
             {
-                Name = name,
-                Email = email,
-                Password = PasswordHasher.Hash(password)
+                Name = dto.Nome,
+                Email = dto.Email,
+                Password = PasswordHasher.Hash(dto.Password),
+                Role = Enum.Parse<UserRole>(dto.Role),
+                LinkedEntityId = dto.LinkedEntityId
             };
 
             await _userRepository.AddAsync(user);

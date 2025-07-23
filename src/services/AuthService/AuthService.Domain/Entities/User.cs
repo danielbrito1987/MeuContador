@@ -12,6 +12,8 @@ namespace AuthService.Domain.Entities
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public UserRole Role { get; set; } = UserRole.Cliente;
+        public Guid? LinkedEntityId {  get; set; }
         public DateTime CreayedAt { get; set; } = DateTime.UtcNow;
     }
 }

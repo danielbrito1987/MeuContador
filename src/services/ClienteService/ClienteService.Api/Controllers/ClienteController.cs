@@ -56,9 +56,7 @@ namespace ClienteService.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ClienteRequest request)
         {
-            var cliente = _mapper.Map<Cliente>(request);
-
-            await _clienteService.AddClienteAsync(request);
+            var cliente = await _clienteService.AddClienteAsync(request);
 
             var response = _mapper.Map<ClienteDto>(cliente);
 
