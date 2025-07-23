@@ -56,13 +56,14 @@ namespace ApiGateway.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] ContadorDto clientRequest)
+        public async Task<IActionResult> Create([FromBody] ContadorDto contadorRequest)
         {
             var token = HttpContext.Request.Headers["Authorization"].ToString();
             var url = _urlResolver.GetUrl("ContadorService");
+            var authUrl = _urlResolver.GetUrl("AuthService");
             var client = _clientFactory.CreateClient("ProxyCliente");
 
-            var json = JsonSerializer.Serialize(clientRequest);
+            var json = JsonSerializer.Serialize(contadorRequest);
             using var request = new HttpRequestMessage(HttpMethod.Post, url)
             {
                 Content = new StringContent(json, Encoding.UTF8, "application/json")
@@ -75,12 +76,35 @@ namespace ApiGateway.Controllers
             {
                 var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
 
+                if (!response.IsSuccessStatusCode)
+                    return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
+
                 var body = await response.Content.ReadAsStringAsync();
 
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                var cliente = JsonSerializer.Deserialize<ContadorResponseDto>(body, options);
+                var contador = JsonSerializer.Deserialize<ContadorResponseDto>(body, options);
 
-                return StatusCode((int)response.StatusCode, cliente);
+                var registerDto = new RegisterDto
+                {
+                    Nome = contador!.Nome,
+                    Email = contador.Email,
+                    Role = "Contador",
+                    Senha = contadorRequest.Password,
+                    LinkedEntityId = contador.Id
+                };
+
+                var authResponse = await client.PostAsJsonAsync($"{authUrl}/register", registerDto);
+
+                if (!authResponse.IsSuccessStatusCode)
+                    return StatusCode((int)authResponse.StatusCode, await authResponse.Content.ReadAsStringAsync());
+
+                var authResult = await authResponse.Content.ReadAsStringAsync();
+
+                return Ok(new
+                {
+                    contador,
+                    auth = JsonSerializer.Deserialize<object>(authResult)
+                });
             }
             catch (Exception ex)
             {
