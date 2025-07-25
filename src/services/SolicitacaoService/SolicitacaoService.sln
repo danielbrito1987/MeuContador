@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolicitacaoService.Api", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolicitacaoService.Domain", "SolicitacaoService.Domain\SolicitacaoService.Domain.csproj", "{D8F0F7E9-5474-4B74-83F3-090D3E3B3055}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolicitacaoServuce.Application", "SolicitacaoServuce.Application\SolicitacaoServuce.Application.csproj", "{D343BAD6-B786-43B9-86B3-E30C346FAE69}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolicitacaoService.Application", "SolicitacaoServuce.Application\SolicitacaoService.Application.csproj", "{D343BAD6-B786-43B9-86B3-E30C346FAE69}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolicitacaoService.Infraestructure", "SolicitacaoService.Infraestructure\SolicitacaoService.Infraestructure.csproj", "{6D3AA600-80C5-4467-869C-9B74C79204DD}"
 EndProject
